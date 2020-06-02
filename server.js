@@ -12,13 +12,11 @@ Date.prototype.addHours = function(h) {
 };
 
 app.get('/key', (req, res) => {
-  // Normally you would process user authentication here
-
   // Set to expire in 1 hour
   const expirationTime = new Date().addHours(1).getTime();
 
   // Create a temporary public key
-  const publicKey = client.generateSecuredApiKey(
+  const securedKey = client.generateSecuredApiKey(
     process.env.ALGOLIA_SECRET,
     {
       filters: `discipline:physics`,
@@ -27,7 +25,7 @@ app.get('/key', (req, res) => {
   );
 
   res.json({
-    publicKey,
+    securedKey,
     expirationTime,
   });
 });
